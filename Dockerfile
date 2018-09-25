@@ -82,4 +82,12 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 RUN rm -rf /temp-files
 
+#######################################################
+### Entrypoint
+#######################################################
+
+ADD hadoop-entrypoint.sh /entrypoint.sh
+RUN chmod 777 /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
 
