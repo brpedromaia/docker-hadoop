@@ -15,14 +15,24 @@ USER root
 ### Default Installation
 #######################################################
 
-#RUN yum install -y curl tar sudo which initscripts openssh-server openssh-clients rsync 
-RUN yum install -y which openssh-clients curl nc openssh-server openssl > /dev/null 2>&1
+#SSH Dependecies
+RUN yum install -y openssh-clients openssh-server> /dev/null 2>&1
+
+#User Dependecies
+RUN yum install -y openssl sudo> /dev/null 2>&1
+
+#Network Dependencies
+RUN yum install -y nc> /dev/null 2>&1
+
+#HDFS Dependencies
+RUN yum install -y which> /dev/null 2>&1
+
 
 #######################################################
 ### Dev tools
 #######################################################
 
-#RUN yum install -y net-tools telnet mc git unzip
+RUN yum install -y telnet mc git
 
 #######################################################
 ### Java Installation
@@ -86,8 +96,8 @@ RUN rm -rf /temp-files
 ### Entrypoint
 #######################################################
 
-ADD hadoop-entrypoint.sh /entrypoint.sh
-RUN chmod 777 /entrypoint.sh
+ADD hadoop-entrypoint.sh /hadoop-entrypoint.sh
+RUN chmod 777 /hadoop-entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+RUN /hadoop-entrypoint.sh
 
